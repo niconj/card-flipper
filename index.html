@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cards Widget</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <cards :amount="4"></cards>
+  </div>
+  <script>
+    // Write your code here
+    Vue.component('cards', {
+        template: `
+        <table>
+          <tbody>
+            <tr>
+              <td v-for="(card, cardIndex) in cards" @click="turnCard(cardIndex)">
+                {{ cardIndex === faceUpCard ? "up" : "down" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        `,
+        props: {
+          amount: Number
+        },
+        data() {
+          return {
+            cards: new Array(this.amount),
+            faceUpCard: 0
+          }
+        },
+        methods: {
+          turnCard(cardIndex) {
+            this.faceUpCard = cardIndex
+          }
+        }
+    })
+
+    var vm = new Vue({
+      el: '#app'
+    });
+    
+    // Example case
+    let row = document.getElementById("app").getElementsByTagName("tr")[0];
+    if(row) {
+      let cell = row.getElementsByTagName("td")[1];
+      if(cell) {
+        cell.click();
+      }
+    }
+    setTimeout(() => console.log(document.getElementById("app").innerHTML));
+  </script>
+</body>
+</html>
